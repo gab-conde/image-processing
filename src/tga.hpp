@@ -39,4 +39,5 @@ class TGA {
     /* ========== Mutators ========== */
         void ReadFile(ifstream& input);
         void WriteFile(ofstream& output);
+        void CopyHeader(TGA& other);
 };

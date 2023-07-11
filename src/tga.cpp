@@ -61,3 +61,17 @@ void TGA::WriteFile(ofstream& output) {
         output.write(reinterpret_cast<char*>(&data[i].red), 1);
     }
 }
+
+void TGA::CopyHeader(TGA& other) {
+    idLength = other.idLength;
+    colorMapType = other.colorMapType;
+    imageType = other.imageType;
+    colorMapOrigin = other.colorMapOrigin;
+    colorMapLength = other.colorMapLength;
+    xOrigin = other.xOrigin;
+    yOrigin = other.yOrigin;
+    imageWidth = other.imageWidth;
+    imageHeight = other.imageHeight;
+    pixelDepth = other.pixelDepth;
+    imageDescriptor = other.imageDescriptor;
+}
