@@ -34,4 +34,8 @@ class TGA {
     /* ========== Accessors ========== */
         int GetSize() const;
         Pixel* GetImgData() const;
+
+
+    /* ========== Mutators ========== */
+        void ReadFile(ifstream& input);
 };
