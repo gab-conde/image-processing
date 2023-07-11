@@ -28,4 +28,10 @@ class TGA {
         char pixelDepth;
         char imageDescriptor;
         Pixel* data;
+
+
+    public:
+    /* ========== Accessors ========== */
+        int GetSize() const;
+        Pixel* GetImgData() const;
 };
