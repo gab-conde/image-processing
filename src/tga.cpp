@@ -38,4 +38,26 @@ void TGA::ReadFile(ifstream& input) {
         input.read(reinterpret_cast<char*>(&data[i].green), 1);
         input.read(reinterpret_cast<char*>(&data[i].red), 1);
     }
-}    
+}
+
+void TGA::WriteFile(ofstream& output) {
+    // write header
+    output.write(&idLength, 1);
+    output.write(&colorMapType, 1);
+    output.write(&imageType, 1);
+    output.write(reinterpret_cast<char*>(&colorMapOrigin), 2);
+    output.write(reinterpret_cast<char*>(&colorMapLength), 2);
+    output.write(&colorMapDepth, 1);
+    output.write(reinterpret_cast<char*>(&xOrigin), 2);
+    output.write(reinterpret_cast<char*>(&yOrigin), 2);
+    output.write(reinterpret_cast<char*>(&imageWidth), 2);
+    output.write(reinterpret_cast<char*>(&imageHeight), 2);
+    output.write(&pixelDepth, 1);
+    output.write(&imageDescriptor, 1);
+    // write image data
+    for (int i = 0; i < imageWidth * imageHeight; i++) {
+        output.write(reinterpret_cast<char*>(&data[i].blue), 1);
+        output.write(reinterpret_cast<char*>(&data[i].green), 1);
+        output.write(reinterpret_cast<char*>(&data[i].red), 1);
+    }
+}
