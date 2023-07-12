@@ -108,3 +108,21 @@ void TGA::Subtract(TGA& p1, TGA& p2) {
         }
     }
 }
+
+void TGA::Multiply(TGA& top, TGA& bottom) {
+    this->CopyHeader(bottom);
+    this->data = new Pixel[this->GetSize()];
+    for (int i = 0; i < this->GetSize(); i++) {
+        float b1 = top.data[i].blue / 255.0f;
+        float b2 = bottom.data[i].blue / 255.0f;
+        this->data[i].blue = static_cast<unsigned char>(((b1 * b2) * 255) + 0.5f);
+
+        float g1 = top.data[i].green / 255.0f;
+        float g2 = bottom.data[i].green / 255.0f;
+        this->data[i].green = static_cast<unsigned char>(((g1 * g2) * 255) + 0.5f);
+
+        float r1 = top.data[i].red / 255.0f;
+        float r2 = bottom.data[i].red / 255.0f;
+        this->data[i].red = static_cast<unsigned char>(((r1 * r2) * 255) + 0.5f);
+    }
+}

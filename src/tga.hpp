@@ -43,3 +43,4 @@ class TGA {
 
     /* ========== Operations ========= */
         void Subtract(TGA& p1, TGA& p2);
+        void Multiply(TGA& top, TGA& bottom);
