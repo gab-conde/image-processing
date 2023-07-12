@@ -75,3 +75,36 @@ void TGA::CopyHeader(TGA& other) {
     pixelDepth = other.pixelDepth;
     imageDescriptor = other.imageDescriptor;
 }
+
+
+/* ========== Operations ========= */
+
+void TGA::Subtract(TGA& p1, TGA& p2) {
+    int blue, green, red;
+    this->CopyHeader(p1);
+    this->data = new Pixel[this->GetSize()];
+    // subtract color channels for each pixel
+    for (int i = 0; i < this->GetSize(); i++) {
+        blue = p1.data[i].blue - p2.data[i].blue;
+        green = p1.data[i].green - p2.data[i].green;
+        red = p1.data[i].red - p2.data[i].red;
+        if (blue < 0) {
+            this->data[i].blue = 0;
+        }
+        else if (blue >= 0) {
+            this->data[i].blue = static_cast<unsigned char>(blue);
+        }
+        if (green < 0) {
+            this->data[i].green = 0;
+        }
+        else if (green >= 0) {
+            this->data[i].green = static_cast<unsigned char>(green);
+        }
+        if (red < 0) {
+            this->data[i].red = 0;
+        }
+        else if (red >= 0) {
+            this->data[i].red = static_cast<unsigned char>(red);
+        }
+    }
+}

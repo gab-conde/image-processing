@@ -40,4 +40,6 @@ class TGA {
         void ReadFile(ifstream& input);
         void WriteFile(ofstream& output);
         void CopyHeader(TGA& other);
-};
+
+    /* ========== Operations ========= */
+        void Subtract(TGA& p1, TGA& p2);
