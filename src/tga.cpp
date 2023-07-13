@@ -138,18 +138,62 @@ void TGA::Screen(TGA& p1, TGA& p2) {
 
         n1 = p1.data[i].blue / 255.0f;
         n2 = p2.data[i].blue / 255.0f;
-        float goat = 1 - ((1-n1) * (1-n2));
-        this->data[i].blue = goat * 255 + .5;
+        float blue = 1 - ((1-n1) * (1-n2));
+        this->data[i].blue = blue * 255 + 0.5;
 
         n1 = p1.data[i].green / 255.0f;
         n2 = p2.data[i].green / 255.0f;
-        float tim = 1 - ((1-n1) * (1-n2));
-        this->data[i].green = tim * 255 + .5;
+        float green = 1 - ((1-n1) * (1-n2));
+        this->data[i].green = green * 255 + 0.5;
 
         n1 = p1.data[i].red / 255.0f;
         n2 = p2.data[i].red / 255.0f;
-        float bob = 1 - ((1-n1) * (1-n2));
-        this->data[i].red = bob * 255 + .5;
+        float red = 1 - ((1-n1) * (1-n2));
+        this->data[i].red = red * 255 + 0.5;
+    }
+}
+
+void TGA::Overlay(TGA& p1, TGA& p2) {
+    this->CopyHeader(p1);
+    this->data = new Pixel[this->GetSize()];
+
+    float n1, n2, blue, green, red;
+    for (int i = 0; i < this->GetSize(); i++) {
+        n1 = 0;
+        n2 = 0;
+
+        n1 = p1.data[i].blue / 255.0f;
+        n2 = p2.data[i].blue / 255.0f;
+        if (n2 <= 0.5) {
+            blue = 2 * n1 * n2;
+            this->data[i].blue = blue * 255 + 0.5;
+        }
+        else {
+            blue = 1 - (2 * (1 - n1) * (1 - n2));
+            this->data[i].blue = blue * 255 + 0.5;
+        }
+
+        n1 = p1.data[i].green / 255.0f;
+        n2 = p2.data[i].green / 255.0f;
+        if (n2 <= 0.5) {
+            green = 2 * n1 * n2;
+            this->data[i].green = green * 255 + 0.5;
+        }
+        else {
+            green = 1 - (2 * (1 - n1) * (1 - n2));
+            this->data[i].green = green * 255 + 0.5;
+        }
+
+        n1 = p1.data[i].red / 255.0f;
+        n2 = p2.data[i].red / 255.0f;
+        if (n2 <= 0.5) {
+            red = 2 * n1 * n2;
+            this->data[i].red = red * 255 + 0.5;
+        }
+        else {
+            red = 1 - (2 * (1 - n1) * (1 - n2));
+            this->data[i].red = red * 255 + 0.5;
+        }
     }
 }
 

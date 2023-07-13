@@ -45,5 +45,6 @@ class TGA {
         void Subtract(TGA& p1, TGA& p2);
         void Multiply(TGA& top, TGA& bottom);
         void Screen(TGA& p1, TGA& p2);
+        void Overlay(TGA& p1, TGA& p2);
         void AddGreen(unsigned char amount);
 };
