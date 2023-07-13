@@ -1,0 +1,12 @@
+# ignore compiled object files
+*.o
+*.obj
+*.lo
+
+# ignore executables
+*.out
+*.exe
+*.app
+
+# ignore output images
+output/
