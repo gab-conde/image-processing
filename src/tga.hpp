@@ -52,6 +52,7 @@ class TGA {
         void Overlay(TGA& p1, TGA& p2);
         void Screen(TGA& p1, TGA& p2);
         void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
+        void Flip();
         void AddBlue(unsigned char amount);
         void AddGreen(unsigned char amount);
         void AddRed(unsigned char amount);

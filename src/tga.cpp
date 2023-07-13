@@ -234,6 +234,15 @@ void TGA::Combine(unsigned char* blue, unsigned char* green, unsigned char* red)
     }
 }
 
+void TGA::Flip() {
+    Pixel temp;
+    for (int i = 0; i < GetSize() / 2; i++) {
+        temp = data[i];
+        data[i] = data[(GetSize() - 1) - i];
+        data[(GetSize() - 1) - i] = temp;
+    }
+}
+
 void TGA::AddBlue(unsigned char amount) {
     int blue;
     for (int i = 0; i < this->GetSize(); i++) {
