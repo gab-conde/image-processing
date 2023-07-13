@@ -91,19 +91,19 @@ void TGA::Subtract(TGA& p1, TGA& p2) {
         if (blue < 0) {
             this->data[i].blue = 0;
         }
-        else{
+        else {
             this->data[i].blue = static_cast<unsigned char>(blue);
         }
         if (green < 0) {
             this->data[i].green = 0;
         }
-        else if {
+        else {
             this->data[i].green = static_cast<unsigned char>(green);
         }
         if (red < 0) {
             this->data[i].red = 0;
         }
-        else if {
+        else {
             this->data[i].red = static_cast<unsigned char>(red);
         }
     }
@@ -206,6 +206,45 @@ void TGA::AddGreen(unsigned char amount) {
         }
         else {
             this->data[i].green = static_cast<unsigned char>(green);
+        }
+    }
+}
+
+void TGA::ScaleBlue(unsigned char amount) {
+    int blue;
+    for (int i = 0; i < this->GetSize(); i++) {
+        blue = data[i].blue * amount;
+        if(blue > 255) {
+            data[i].blue = 255;
+        }
+        else {
+            data[i].blue = static_cast<unsigned char>(blue);
+        }
+    }
+}
+
+void TGA::ScaleGreen(unsigned char amount) {
+    int green;
+    for (int i = 0; i < this->GetSize(); i++) {
+        green = data[i].green * amount;
+        if(green > 255) {
+            data[i].green = 255;
+        }
+        else {
+            data[i].green = static_cast<unsigned char>(green);
+        }
+    }
+}
+
+void TGA::ScaleRed(unsigned char amount) {
+    int red;
+    for (int i = 0; i < this->GetSize(); i++) {
+        red = data[i].red * amount;
+        if(red > 255) {
+            data[i].red = 255;
+        }
+        else {
+            data[i].red = static_cast<unsigned char>(red);
         }
     }
 }
