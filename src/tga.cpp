@@ -127,6 +127,32 @@ void TGA::Multiply(TGA& top, TGA& bottom) {
     }
 }
 
+void TGA::Screen(TGA& p1, TGA& p2) {
+    this->CopyHeader(p1);
+    this->data = new Pixel[this->GetSize()];
+
+    float n1, n2;
+    for (int i = 0; i < this->GetSize(); i++) {
+        n1 = 0;
+        n2 = 0;
+
+        n1 = p1.data[i].blue / 255.0f;
+        n2 = p2.data[i].blue / 255.0f;
+        float goat = 1 - ((1-n1) * (1-n2));
+        this->data[i].blue = goat * 255 + .5;
+
+        n1 = p1.data[i].green / 255.0f;
+        n2 = p2.data[i].green / 255.0f;
+        float tim = 1 - ((1-n1) * (1-n2));
+        this->data[i].green = tim * 255 + .5;
+
+        n1 = p1.data[i].red / 255.0f;
+        n2 = p2.data[i].red / 255.0f;
+        float bob = 1 - ((1-n1) * (1-n2));
+        this->data[i].red = bob * 255 + .5;
+    }
+}
+
 void TGA::AddGreen(unsigned char amount) {
     int green;
     for (int i = 0; i < this->GetSize(); i++) {
