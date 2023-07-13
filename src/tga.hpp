@@ -41,7 +41,12 @@ class TGA {
         void WriteFile(ofstream& output);
         void CopyHeader(TGA& other);
 
-    /* ========== Operations ========= */
+    /* ========== Accessor Operations ========= */
+        unsigned char* OnlyBlue() const;
+        unsigned char* OnlyGreen() const;
+        unsigned char* OnlyRed() const;
+
+    /* ========== Mutator Operations ========= */
         void Subtract(TGA& p1, TGA& p2);
         void Multiply(TGA& top, TGA& bottom);
         void Screen(TGA& p1, TGA& p2);
@@ -50,4 +55,5 @@ class TGA {
         void ScaleBlue(unsigned char amount);
         void ScaleGreen(unsigned char amount);
         void ScaleRed(unsigned char amount);
+        void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
 };

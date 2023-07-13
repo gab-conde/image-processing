@@ -77,7 +77,35 @@ void TGA::CopyHeader(TGA& other) {
 }
 
 
-/* ========== Operations ========= */
+
+/* ========== Mutator Operations ========= */
+
+unsigned char* TGA::OnlyBlue() const {
+    unsigned char* blue = new unsigned char[GetSize()];
+    for (int i = 0; i < GetSize(); i++) {
+        blue[i] = data[i].blue;
+    }
+    return blue;
+}
+
+unsigned char* TGA::OnlyGreen() const {
+    unsigned char* green = new unsigned char[GetSize()];
+    for (int i = 0; i < GetSize(); i++) {
+        green[i] = data[i].green;
+    }
+    return green;
+}
+
+unsigned char* TGA::OnlyRed() const {
+    unsigned char* red = new unsigned char[GetSize()];
+    for (int i = 0; i < GetSize(); i++) {
+        red[i] = data[i].red;
+    }
+    return red;
+}
+
+
+/* ========== Mutator Operations ========= */
 
 void TGA::Subtract(TGA& p1, TGA& p2) {
     int blue, green, red;
@@ -246,5 +274,14 @@ void TGA::ScaleRed(unsigned char amount) {
         else {
             data[i].red = static_cast<unsigned char>(red);
         }
+    }
+}
+
+void TGA::Combine(unsigned char* blue, unsigned char* green, unsigned char* red) {
+    data = new Pixel[GetSize()];
+    for (int i = 0; i < GetSize(); i++) {
+        data[i].blue = blue[i];
+        data[i].green = green[i];
+        data[i].red = red[i];
     }
 }
