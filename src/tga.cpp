@@ -126,3 +126,16 @@ void TGA::Multiply(TGA& top, TGA& bottom) {
         this->data[i].red = static_cast<unsigned char>(((r1 * r2) * 255) + 0.5f);
     }
 }
+
+void TGA::AddGreen(unsigned char amount) {
+    int green;
+    for (int i = 0; i < this->GetSize(); i++) {
+        green = data[i].green + amount;
+        if (green > 255) {
+            this->data[i].green = 255;
+        }
+        else {
+            this->data[i].green = static_cast<unsigned char>(green);
+        }
+    }
+}
