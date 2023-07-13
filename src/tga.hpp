@@ -31,6 +31,12 @@ class TGA {
 
 
     public:
+    /* ========== Construction / Destruction ========== */
+    TGA() = default;
+    TGA(const TGA& other);
+    TGA& operator=(const TGA&);
+    ~TGA();
+
     /* ========== Accessors ========== */
         int GetSize() const;
         Pixel* GetImgData() const;
@@ -39,7 +45,7 @@ class TGA {
     /* ========== Mutators ========== */
         void ReadFile(ifstream& input);
         void WriteFile(ofstream& output);
-        void CopyHeader(TGA& other);
+        void CopyHeader(const TGA& other);
 
     /* ========== Accessor Operations ========= */
         unsigned char* OnlyBlue() const;
@@ -47,10 +53,10 @@ class TGA {
         unsigned char* OnlyRed() const;
 
     /* ========== Mutator Operations ========= */
-        void Subtract(TGA& p1, TGA& p2);
-        void Multiply(TGA& top, TGA& bottom);
-        void Overlay(TGA& p1, TGA& p2);
-        void Screen(TGA& p1, TGA& p2);
+        void Subtract(const TGA& p1, const TGA& p2);
+        void Multiply(const TGA& top, const TGA& bottom);
+        void Overlay(const TGA& p1, const TGA& p2);
+        void Screen(const TGA& p1, const TGA& p2);
         void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
         void Flip();
         void AddBlue(unsigned char amount);

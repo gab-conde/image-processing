@@ -3,6 +3,49 @@
 #include "tga.hpp"
 using namespace std;
 
+/* ========== Construction / Destruction ========== */
+TGA::TGA(const TGA& other) {
+    idLength = other.idLength;
+    colorMapType = other.colorMapType;
+    imageType = other.imageType;
+    colorMapOrigin = other.colorMapOrigin;
+    colorMapLength = other.colorMapLength;
+    colorMapDepth = other.colorMapDepth;
+    xOrigin = other.xOrigin;
+    yOrigin = other.yOrigin;
+    imageWidth = other.imageWidth;
+    imageHeight = other.imageHeight;
+    pixelDepth = other.pixelDepth;
+    imageDescriptor = other.imageDescriptor;
+    data = new Pixel[GetSize()];
+    for (int i = 0; i < GetSize(); i++) {
+        data[i] = other.data[i];
+    }
+}
+
+TGA& TGA::operator=(const TGA& other) {
+    idLength = other.idLength;
+    colorMapType = other.colorMapType;
+    imageType = other.imageType;
+    colorMapOrigin = other.colorMapOrigin;
+    colorMapLength = other.colorMapLength;
+    colorMapDepth = other.colorMapDepth;
+    xOrigin = other.xOrigin;
+    yOrigin = other.yOrigin;
+    imageWidth = other.imageWidth;
+    imageHeight = other.imageHeight;
+    pixelDepth = other.pixelDepth;
+    imageDescriptor = other.imageDescriptor;
+    for (int i = 0; i < GetSize(); i++) {
+        data[i] = other.data[i];
+    }
+    return *this;
+}
+
+TGA::~TGA() {
+    delete[] data;
+}
+
 
 /* ========== Accessors ========== */
 
@@ -62,7 +105,7 @@ void TGA::WriteFile(ofstream& output) {
     }
 }
 
-void TGA::CopyHeader(TGA& other) {
+void TGA::CopyHeader(const TGA& other) {
     idLength = other.idLength;
     colorMapType = other.colorMapType;
     imageType = other.imageType;
@@ -77,8 +120,7 @@ void TGA::CopyHeader(TGA& other) {
 }
 
 
-
-/* ========== Mutator Operations ========= */
+/* ========== Accessor Operations ========= */
 
 unsigned char* TGA::OnlyBlue() const {
     unsigned char* blue = new unsigned char[GetSize()];
@@ -107,7 +149,7 @@ unsigned char* TGA::OnlyRed() const {
 
 /* ========== Mutator Operations ========= */
 
-void TGA::Subtract(TGA& p1, TGA& p2) {
+void TGA::Subtract(const TGA& p1, const TGA& p2) {
     int blue, green, red;
     this->CopyHeader(p1);
     this->data = new Pixel[this->GetSize()];
@@ -137,7 +179,7 @@ void TGA::Subtract(TGA& p1, TGA& p2) {
     }
 }
 
-void TGA::Multiply(TGA& top, TGA& bottom) {
+void TGA::Multiply(const TGA& top, const TGA& bottom) {
     this->CopyHeader(bottom);
     this->data = new Pixel[this->GetSize()];
     for (int i = 0; i < this->GetSize(); i++) {
@@ -155,7 +197,7 @@ void TGA::Multiply(TGA& top, TGA& bottom) {
     }
 }
 
-void TGA::Overlay(TGA& p1, TGA& p2) {
+void TGA::Overlay(const TGA& p1, const TGA& p2) {
     this->CopyHeader(p1);
     this->data = new Pixel[this->GetSize()];
 
@@ -199,7 +241,7 @@ void TGA::Overlay(TGA& p1, TGA& p2) {
     }
 }
 
-void TGA::Screen(TGA& p1, TGA& p2) {
+void TGA::Screen(const TGA& p1, const TGA& p2) {
     this->CopyHeader(p1);
     this->data = new Pixel[this->GetSize()];
 
