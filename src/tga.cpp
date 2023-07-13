@@ -91,19 +91,19 @@ void TGA::Subtract(TGA& p1, TGA& p2) {
         if (blue < 0) {
             this->data[i].blue = 0;
         }
-        else if (blue >= 0) {
+        else{
             this->data[i].blue = static_cast<unsigned char>(blue);
         }
         if (green < 0) {
             this->data[i].green = 0;
         }
-        else if (green >= 0) {
+        else if {
             this->data[i].green = static_cast<unsigned char>(green);
         }
         if (red < 0) {
             this->data[i].red = 0;
         }
-        else if (red >= 0) {
+        else if {
             this->data[i].red = static_cast<unsigned char>(red);
         }
     }
@@ -131,24 +131,24 @@ void TGA::Screen(TGA& p1, TGA& p2) {
     this->CopyHeader(p1);
     this->data = new Pixel[this->GetSize()];
 
-    float n1, n2;
+    float n1, n2, blue, green, red;
     for (int i = 0; i < this->GetSize(); i++) {
         n1 = 0;
         n2 = 0;
 
         n1 = p1.data[i].blue / 255.0f;
         n2 = p2.data[i].blue / 255.0f;
-        float blue = 1 - ((1-n1) * (1-n2));
+        blue = 1 - ((1-n1) * (1-n2));
         this->data[i].blue = blue * 255 + 0.5;
 
         n1 = p1.data[i].green / 255.0f;
         n2 = p2.data[i].green / 255.0f;
-        float green = 1 - ((1-n1) * (1-n2));
+        green = 1 - ((1-n1) * (1-n2));
         this->data[i].green = green * 255 + 0.5;
 
         n1 = p1.data[i].red / 255.0f;
         n2 = p2.data[i].red / 255.0f;
-        float red = 1 - ((1-n1) * (1-n2));
+        red = 1 - ((1-n1) * (1-n2));
         this->data[i].red = red * 255 + 0.5;
     }
 }
