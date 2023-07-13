@@ -51,7 +51,9 @@ class TGA {
         void Multiply(TGA& top, TGA& bottom);
         void Screen(TGA& p1, TGA& p2);
         void Overlay(TGA& p1, TGA& p2);
+        void AddBlue(unsigned char amount);
         void AddGreen(unsigned char amount);
+        void AddRed(unsigned char amount);
         void ScaleBlue(unsigned char amount);
         void ScaleGreen(unsigned char amount);
         void ScaleRed(unsigned char amount);

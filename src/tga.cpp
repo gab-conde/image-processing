@@ -225,6 +225,19 @@ void TGA::Overlay(TGA& p1, TGA& p2) {
     }
 }
 
+void TGA::AddBlue(unsigned char amount) {
+    int blue;
+    for (int i = 0; i < this->GetSize(); i++) {
+        blue = data[i].green + amount;
+        if (blue > 255) {
+            this->data[i].blue = 255;
+        }
+        else {
+            this->data[i].blue = static_cast<unsigned char>(blue);
+        }
+    }
+}
+
 void TGA::AddGreen(unsigned char amount) {
     int green;
     for (int i = 0; i < this->GetSize(); i++) {
@@ -234,6 +247,19 @@ void TGA::AddGreen(unsigned char amount) {
         }
         else {
             this->data[i].green = static_cast<unsigned char>(green);
+        }
+    }
+}
+
+void TGA::AddRed(unsigned char amount) {
+    int red;
+    for (int i = 0; i < this->GetSize(); i++) {
+        red = data[i].red + amount;
+        if (red > 255) {
+            this->data[i].red = 255;
+        }
+        else {
+            this->data[i].red = static_cast<unsigned char>(red);
         }
     }
 }
