@@ -155,32 +155,6 @@ void TGA::Multiply(TGA& top, TGA& bottom) {
     }
 }
 
-void TGA::Screen(TGA& p1, TGA& p2) {
-    this->CopyHeader(p1);
-    this->data = new Pixel[this->GetSize()];
-
-    float n1, n2, blue, green, red;
-    for (int i = 0; i < this->GetSize(); i++) {
-        n1 = 0;
-        n2 = 0;
-
-        n1 = p1.data[i].blue / 255.0f;
-        n2 = p2.data[i].blue / 255.0f;
-        blue = 1 - ((1-n1) * (1-n2));
-        this->data[i].blue = blue * 255 + 0.5;
-
-        n1 = p1.data[i].green / 255.0f;
-        n2 = p2.data[i].green / 255.0f;
-        green = 1 - ((1-n1) * (1-n2));
-        this->data[i].green = green * 255 + 0.5;
-
-        n1 = p1.data[i].red / 255.0f;
-        n2 = p2.data[i].red / 255.0f;
-        red = 1 - ((1-n1) * (1-n2));
-        this->data[i].red = red * 255 + 0.5;
-    }
-}
-
 void TGA::Overlay(TGA& p1, TGA& p2) {
     this->CopyHeader(p1);
     this->data = new Pixel[this->GetSize()];
@@ -222,6 +196,41 @@ void TGA::Overlay(TGA& p1, TGA& p2) {
             red = 1 - (2 * (1 - n1) * (1 - n2));
             this->data[i].red = red * 255 + 0.5;
         }
+    }
+}
+
+void TGA::Screen(TGA& p1, TGA& p2) {
+    this->CopyHeader(p1);
+    this->data = new Pixel[this->GetSize()];
+
+    float n1, n2, blue, green, red;
+    for (int i = 0; i < this->GetSize(); i++) {
+        n1 = 0;
+        n2 = 0;
+
+        n1 = p1.data[i].blue / 255.0f;
+        n2 = p2.data[i].blue / 255.0f;
+        blue = 1 - ((1-n1) * (1-n2));
+        this->data[i].blue = blue * 255 + 0.5;
+
+        n1 = p1.data[i].green / 255.0f;
+        n2 = p2.data[i].green / 255.0f;
+        green = 1 - ((1-n1) * (1-n2));
+        this->data[i].green = green * 255 + 0.5;
+
+        n1 = p1.data[i].red / 255.0f;
+        n2 = p2.data[i].red / 255.0f;
+        red = 1 - ((1-n1) * (1-n2));
+        this->data[i].red = red * 255 + 0.5;
+    }
+}
+
+void TGA::Combine(unsigned char* blue, unsigned char* green, unsigned char* red) {
+    data = new Pixel[GetSize()];
+    for (int i = 0; i < GetSize(); i++) {
+        data[i].blue = blue[i];
+        data[i].green = green[i];
+        data[i].red = red[i];
     }
 }
 
@@ -300,14 +309,5 @@ void TGA::ScaleRed(unsigned char amount) {
         else {
             data[i].red = static_cast<unsigned char>(red);
         }
-    }
-}
-
-void TGA::Combine(unsigned char* blue, unsigned char* green, unsigned char* red) {
-    data = new Pixel[GetSize()];
-    for (int i = 0; i < GetSize(); i++) {
-        data[i].blue = blue[i];
-        data[i].green = green[i];
-        data[i].red = red[i];
     }
 }

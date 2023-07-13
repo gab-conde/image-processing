@@ -49,13 +49,13 @@ class TGA {
     /* ========== Mutator Operations ========= */
         void Subtract(TGA& p1, TGA& p2);
         void Multiply(TGA& top, TGA& bottom);
-        void Screen(TGA& p1, TGA& p2);
         void Overlay(TGA& p1, TGA& p2);
+        void Screen(TGA& p1, TGA& p2);
+        void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
         void AddBlue(unsigned char amount);
         void AddGreen(unsigned char amount);
         void AddRed(unsigned char amount);
         void ScaleBlue(unsigned char amount);
         void ScaleGreen(unsigned char amount);
         void ScaleRed(unsigned char amount);
-        void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
 };
