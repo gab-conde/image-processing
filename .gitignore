@@ -10,3 +10,9 @@
 
 # ignore output images
 output/
+
+# ignore python testing script
+PythonComparison/
+
+# ignore zip
+conde.gabriella.project2.zip
