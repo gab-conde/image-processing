@@ -65,4 +65,5 @@ class TGA {
         void ScaleBlue(unsigned char amount);
         void ScaleGreen(unsigned char amount);
         void ScaleRed(unsigned char amount);
+
 };

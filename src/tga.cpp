@@ -208,35 +208,40 @@ void TGA::Overlay(const TGA& p1, const TGA& p2) {
 
         n1 = p1.data[i].blue / 255.0f;
         n2 = p2.data[i].blue / 255.0f;
-        if (n2 <= 0.5) {
+
+        //Logic for Blue Pixel
+        if (n2 <= 0.5f) {
             blue = 2 * n1 * n2;
-            this->data[i].blue = blue * 255 + 0.5;
+            this->data[i].blue = (blue * 255) + 0.5f;
         }
+        
         else {
             blue = 1 - (2 * (1 - n1) * (1 - n2));
-            this->data[i].blue = blue * 255 + 0.5;
+            this->data[i].blue = (blue * 255) + 0.5f;
         }
-
+        
+        //Logic for Green Pixel
         n1 = p1.data[i].green / 255.0f;
         n2 = p2.data[i].green / 255.0f;
-        if (n2 <= 0.5) {
+        if (n2 <= 0.5f) {
             green = 2 * n1 * n2;
-            this->data[i].green = green * 255 + 0.5;
+            this->data[i].green = (green * 255) + 0.5f;
         }
         else {
             green = 1 - (2 * (1 - n1) * (1 - n2));
-            this->data[i].green = green * 255 + 0.5;
+            this->data[i].green = (green * 255) + 0.5f;
         }
 
+        //Logic for Red
         n1 = p1.data[i].red / 255.0f;
         n2 = p2.data[i].red / 255.0f;
-        if (n2 <= 0.5) {
+        if (n2 <= 0.5f) {
             red = 2 * n1 * n2;
-            this->data[i].red = red * 255 + 0.5;
+            this->data[i].red = (red * 255) + 0.5f;
         }
         else {
             red = 1 - (2 * (1 - n1) * (1 - n2));
-            this->data[i].red = red * 255 + 0.5;
+            this->data[i].red = (red * 255) + 0.5f;
         }
     }
 }
