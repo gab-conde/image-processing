@@ -291,7 +291,7 @@ void TGA::Flip() {
     }
 }
 
-void TGA::AddBlue(char amount) {
+void TGA::AddBlue(short amount) {
     int blue;
     for (int i = 0; i < this->GetSize(); i++) {
         blue = data[i].green + amount;
@@ -307,7 +307,7 @@ void TGA::AddBlue(char amount) {
     }
 }
 
-void TGA::AddGreen(char amount) {
+void TGA::AddGreen(short amount) {
     int green;
     for (int i = 0; i < this->GetSize(); i++) {
         green = data[i].green + amount;
@@ -315,7 +315,7 @@ void TGA::AddGreen(char amount) {
             this->data[i].green = 255;
         }
         else if (green < 0) {
-            this->data.green = 0;
+            this->data[i].green = 0;
         }
         else {
             this->data[i].green = static_cast<unsigned char>(green);
@@ -323,7 +323,7 @@ void TGA::AddGreen(char amount) {
     }
 }
 
-void TGA::AddRed(char amount) {
+void TGA::AddRed(short amount) {
     int red;
     for (int i = 0; i < this->GetSize(); i++) {
         red = data[i].red + amount;
@@ -339,7 +339,7 @@ void TGA::AddRed(char amount) {
     }
 }
 
-void TGA::ScaleBlue(unsigned char amount) {
+void TGA::ScaleBlue(unsigned short amount) {
     int blue;
     for (int i = 0; i < this->GetSize(); i++) {
         blue = data[i].blue * amount;
@@ -352,7 +352,7 @@ void TGA::ScaleBlue(unsigned char amount) {
     }
 }
 
-void TGA::ScaleGreen(unsigned char amount) {
+void TGA::ScaleGreen(unsigned short amount) {
     int green;
     for (int i = 0; i < this->GetSize(); i++) {
         green = data[i].green * amount;
@@ -365,7 +365,7 @@ void TGA::ScaleGreen(unsigned char amount) {
     }
 }
 
-void TGA::ScaleRed(unsigned char amount) {
+void TGA::ScaleRed(unsigned short amount) {
     int red;
     for (int i = 0; i < this->GetSize(); i++) {
         red = data[i].red * amount;

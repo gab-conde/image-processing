@@ -8,6 +8,9 @@
 *.exe
 *.app
 
+# ignore part 1 main
+scr/milestone1.cpp
+
 # ignore output images
 output/
 

@@ -59,11 +59,11 @@ class TGA {
         void Screen(const TGA& p1, const TGA& p2);
         void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
         void Flip();
-        void AddBlue(unsigned char amount);
-        void AddGreen(unsigned char amount);
-        void AddRed(unsigned char amount);
-        void ScaleBlue(unsigned char amount);
-        void ScaleGreen(unsigned char amount);
-        void ScaleRed(unsigned char amount);
+        void AddBlue(short amount);
+        void AddGreen(short amount);
+        void AddRed(short amount);
+        void ScaleBlue(unsigned short amount);
+        void ScaleGreen(unsigned short amount);
+        void ScaleRed(unsigned short amount);
 
 };
