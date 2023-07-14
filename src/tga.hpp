@@ -41,7 +41,6 @@ class TGA {
         int GetSize() const;
         Pixel* GetImgData() const;
 
-
     /* ========== Mutators ========== */
         void ReadFile(ifstream& input);
         void WriteFile(ofstream& output);
@@ -59,11 +58,10 @@ class TGA {
         void Screen(const TGA& p1, const TGA& p2);
         void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
         void Flip();
-        void AddBlue(short amount);
-        void AddGreen(short amount);
-        void AddRed(short amount);
+        void AddBlue(int amount);
+        void AddGreen(int amount);
+        void AddRed(int amount);
         void ScaleBlue(unsigned short amount);
         void ScaleGreen(unsigned short amount);
         void ScaleRed(unsigned short amount);
-
 };
