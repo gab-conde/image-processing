@@ -291,12 +291,15 @@ void TGA::Flip() {
     }
 }
 
-void TGA::AddBlue(unsigned char amount) {
+void TGA::AddBlue(char amount) {
     int blue;
     for (int i = 0; i < this->GetSize(); i++) {
         blue = data[i].green + amount;
         if (blue > 255) {
             this->data[i].blue = 255;
+        }
+        else if (blue < 0) {
+            this->data[i].blue = 0;
         }
         else {
             this->data[i].blue = static_cast<unsigned char>(blue);
@@ -304,12 +307,15 @@ void TGA::AddBlue(unsigned char amount) {
     }
 }
 
-void TGA::AddGreen(unsigned char amount) {
+void TGA::AddGreen(char amount) {
     int green;
     for (int i = 0; i < this->GetSize(); i++) {
         green = data[i].green + amount;
         if (green > 255) {
             this->data[i].green = 255;
+        }
+        else if (green < 0) {
+            this->data.green = 0;
         }
         else {
             this->data[i].green = static_cast<unsigned char>(green);
@@ -317,12 +323,15 @@ void TGA::AddGreen(unsigned char amount) {
     }
 }
 
-void TGA::AddRed(unsigned char amount) {
+void TGA::AddRed(char amount) {
     int red;
     for (int i = 0; i < this->GetSize(); i++) {
         red = data[i].red + amount;
         if (red > 255) {
             this->data[i].red = 255;
+        }
+        else if (red < 0) {
+            this->data[i].red = 0;
         }
         else {
             this->data[i].red = static_cast<unsigned char>(red);
