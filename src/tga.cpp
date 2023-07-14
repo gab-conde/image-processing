@@ -111,6 +111,7 @@ void TGA::CopyHeader(const TGA& other) {
     imageType = other.imageType;
     colorMapOrigin = other.colorMapOrigin;
     colorMapLength = other.colorMapLength;
+    colorMapDepth = other.colorMapDepth;
     xOrigin = other.xOrigin;
     yOrigin = other.yOrigin;
     imageWidth = other.imageWidth;
