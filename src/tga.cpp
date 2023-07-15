@@ -4,6 +4,8 @@
 using namespace std;
 
 /* ========== Construction / Destruction ========== */
+
+// Copy Constructor
 TGA::TGA(const TGA& other) {
     idLength = other.idLength;
     colorMapType = other.colorMapType;
@@ -23,6 +25,7 @@ TGA::TGA(const TGA& other) {
     }
 }
 
+// Copy Assignment Operator
 TGA& TGA::operator=(const TGA& other) {
     idLength = other.idLength;
     colorMapType = other.colorMapType;
@@ -42,6 +45,7 @@ TGA& TGA::operator=(const TGA& other) {
     return *this;
 }
 
+// Destructor
 TGA::~TGA() {
     delete[] data;
 }
@@ -49,10 +53,12 @@ TGA::~TGA() {
 
 /* ========== Accessors ========== */
 
+// Return the total number of Pixels in the TGA
 int TGA::GetSize() const {
     return imageWidth * imageHeight;
 }
 
+// Provide access to the TGA's image data
 TGA::Pixel* TGA::GetImgData() const {
     return data;
 }
@@ -60,6 +66,7 @@ TGA::Pixel* TGA::GetImgData() const {
 
 /* ========== Mutators ========== */
 
+// Store a .tga file in a TGA object
 void TGA::ReadFile(ifstream& input) {
     // read header
     input.read(&idLength, 1);
@@ -83,6 +90,7 @@ void TGA::ReadFile(ifstream& input) {
     }
 }
 
+// Write the data stored in a TGA object to a .tga file
 void TGA::WriteFile(ofstream& output) {
     // write header
     output.write(&idLength, 1);
@@ -105,6 +113,7 @@ void TGA::WriteFile(ofstream& output) {
     }
 }
 
+// Copy the header of one TGA object to another
 void TGA::CopyHeader(const TGA& other) {
     idLength = other.idLength;
     colorMapType = other.colorMapType;
@@ -123,6 +132,7 @@ void TGA::CopyHeader(const TGA& other) {
 
 /* ========== Accessor Operations ========= */
 
+// Return the blue channel of the invoking object
 unsigned char* TGA::OnlyBlue() const {
     unsigned char* blue = new unsigned char[GetSize()];
     for (int i = 0; i < GetSize(); i++) {
@@ -131,6 +141,7 @@ unsigned char* TGA::OnlyBlue() const {
     return blue;
 }
 
+// Return the green channel of the invoking object
 unsigned char* TGA::OnlyGreen() const {
     unsigned char* green = new unsigned char[GetSize()];
     for (int i = 0; i < GetSize(); i++) {
@@ -139,6 +150,7 @@ unsigned char* TGA::OnlyGreen() const {
     return green;
 }
 
+// Return the red channel of the invoking object
 unsigned char* TGA::OnlyRed() const {
     unsigned char* red = new unsigned char[GetSize()];
     for (int i = 0; i < GetSize(); i++) {
@@ -150,6 +162,8 @@ unsigned char* TGA::OnlyRed() const {
 
 /* ========== Mutator Operations ========= */
 
+// Perform the subtraction algorithm on two TGA objects.
+// Store the result in a third TGA object
 void TGA::Subtract(const TGA& p1, const TGA& p2) {
     int blue, green, red;
     CopyHeader(p1);
@@ -180,6 +194,8 @@ void TGA::Subtract(const TGA& p1, const TGA& p2) {
     }
 }
 
+// Perform the multiplication algorithm on two TGA objects.
+// Store the result in a third TGA object
 void TGA::Multiply(const TGA& p1, const TGA& p2) {
     CopyHeader(p2);
     data = new Pixel[GetSize()];
@@ -203,6 +219,8 @@ void TGA::Multiply(const TGA& p1, const TGA& p2) {
     }
 }
 
+// Perform the overlay algorithm on two TGA objects.
+// Store the result in a third TGA object
 void TGA::Overlay(const TGA& p1, const TGA& p2) {
     CopyHeader(p1);
     data = new Pixel[GetSize()];
@@ -251,6 +269,8 @@ void TGA::Overlay(const TGA& p1, const TGA& p2) {
     }
 }
 
+// Perform the screen algorithm on two TGA objects.
+// Store the result in a third TGA object
 void TGA::Screen(const TGA& p1, const TGA& p2) {
     CopyHeader(p1);
     data = new Pixel[GetSize()];
@@ -280,6 +300,7 @@ void TGA::Screen(const TGA& p1, const TGA& p2) {
     }
 }
 
+// Combine three color channels (B, G, R) into the image data of a TGA object
 void TGA::Combine(unsigned char* blue, unsigned char* green, unsigned char* red) {
     data = new Pixel[GetSize()];
     for (int i = 0; i < GetSize(); i++) {
@@ -289,6 +310,7 @@ void TGA::Combine(unsigned char* blue, unsigned char* green, unsigned char* red)
     }
 }
 
+// Rotate the invoking object by 180 degrees
 void TGA::Flip() {
     Pixel temp;
     for (int i = 0; i < GetSize() / 2; i++) {
@@ -298,6 +320,7 @@ void TGA::Flip() {
     }
 }
 
+// Add a specified amount to the TGA's blue channel of the invoking object
 void TGA::AddBlue(int amount) {
     for (int i = 0; i < GetSize(); i++) {
         if (data[i].blue + amount > 255) {
@@ -312,6 +335,7 @@ void TGA::AddBlue(int amount) {
     }
 }
 
+// Add a specified amount to the TGA's green channel of the invoking object
 void TGA::AddGreen(int amount) {
     for (int i = 0; i < GetSize(); i++) {
         if (data[i].green + amount > 255) {
@@ -326,6 +350,7 @@ void TGA::AddGreen(int amount) {
     }
 }
 
+// Add a specified amount to the TGA's red channel of the invoking object
 void TGA::AddRed(int amount) {
     for (int i = 0; i < GetSize(); i++) {
         if (data[i].red + amount > 255) {
@@ -340,6 +365,7 @@ void TGA::AddRed(int amount) {
     }
 }
 
+// Increase the intensity of the TGA's blue channel by a specified factor
 void TGA::ScaleBlue(unsigned short amount) {
     int blue = 0;
     for (int i = 0; i < GetSize(); i++) {
@@ -353,6 +379,7 @@ void TGA::ScaleBlue(unsigned short amount) {
     }
 }
 
+// Increase the intensity of the TGA's green channel by a specified factor
 void TGA::ScaleGreen(unsigned short amount) {
     int green = 0;
     for (int i = 0; i < GetSize(); i++) {
@@ -366,6 +393,7 @@ void TGA::ScaleGreen(unsigned short amount) {
     }
 }
 
+// Increase the intensity of the TGA's red channel by a specified factor
 void TGA::ScaleRed(unsigned short amount) {
     int red;
     for (int i = 0; i < GetSize(); i++) {
