@@ -53,7 +53,7 @@ class TGA {
 
     /* ========== Mutator Operations ========= */
         void Subtract(const TGA& p1, const TGA& p2);
-        void Multiply(const TGA& top, const TGA& bottom);
+        void Multiply(const TGA& p1, const TGA& p2);
         void Overlay(const TGA& p1, const TGA& p2);
         void Screen(const TGA& p1, const TGA& p2);
         void Combine(unsigned char* blue, unsigned char* green, unsigned char* red);
