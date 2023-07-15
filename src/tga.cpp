@@ -76,7 +76,7 @@ void TGA::ReadFile(ifstream& input) {
     input.read(&imageDescriptor, 1);
     // read image data
     data = new Pixel[imageWidth * imageHeight];
-    for (int i = 0; i < imageWidth * imageHeight; i++) {
+    for (int i = 0; i < GetSize(); i++) {
         input.read(reinterpret_cast<char*>(&data[i].blue), 1);
         input.read(reinterpret_cast<char*>(&data[i].green), 1);
         input.read(reinterpret_cast<char*>(&data[i].red), 1);
@@ -98,7 +98,7 @@ void TGA::WriteFile(ofstream& output) {
     output.write(&pixelDepth, 1);
     output.write(&imageDescriptor, 1);
     // write image data
-    for (int i = 0; i < imageWidth * imageHeight; i++) {
+    for (int i = 0; i < GetSize(); i++) {
         output.write(reinterpret_cast<char*>(&data[i].blue), 1);
         output.write(reinterpret_cast<char*>(&data[i].green), 1);
         output.write(reinterpret_cast<char*>(&data[i].red), 1);
@@ -152,124 +152,131 @@ unsigned char* TGA::OnlyRed() const {
 
 void TGA::Subtract(const TGA& p1, const TGA& p2) {
     int blue, green, red;
-    this->CopyHeader(p1);
-    this->data = new Pixel[this->GetSize()];
+    CopyHeader(p1);
+    data = new Pixel[GetSize()];
     // subtract color channels for each pixel
-    for (int i = 0; i < this->GetSize(); i++) {
+    for (int i = 0; i < GetSize(); i++) {
         blue = p1.data[i].blue - p2.data[i].blue;
         green = p1.data[i].green - p2.data[i].green;
         red = p1.data[i].red - p2.data[i].red;
         if (blue < 0) {
-            this->data[i].blue = 0;
+            data[i].blue = 0;
         }
         else {
-            this->data[i].blue = static_cast<unsigned char>(blue);
+            data[i].blue = static_cast<unsigned char>(blue);
         }
         if (green < 0) {
-            this->data[i].green = 0;
+            data[i].green = 0;
         }
         else {
-            this->data[i].green = static_cast<unsigned char>(green);
+            data[i].green = static_cast<unsigned char>(green);
         }
         if (red < 0) {
-            this->data[i].red = 0;
+            data[i].red = 0;
         }
         else {
-            this->data[i].red = static_cast<unsigned char>(red);
+            data[i].red = static_cast<unsigned char>(red);
         }
     }
 }
 
-void TGA::Multiply(const TGA& top, const TGA& bottom) {
-    this->CopyHeader(bottom);
-    this->data = new Pixel[this->GetSize()];
-    for (int i = 0; i < this->GetSize(); i++) {
-        float b1 = top.data[i].blue / 255.0f;
-        float b2 = bottom.data[i].blue / 255.0f;
-        this->data[i].blue = static_cast<unsigned char>(((b1 * b2) * 255) + 0.5f);
+void TGA::Multiply(const TGA& p1, const TGA& p2) {
+    CopyHeader(p2);
+    data = new Pixel[GetSize()];
 
-        float g1 = top.data[i].green / 255.0f;
-        float g2 = bottom.data[i].green / 255.0f;
-        this->data[i].green = static_cast<unsigned char>(((g1 * g2) * 255) + 0.5f);
+    float n1 = 0, n2 = 0;
+    for (int i = 0; i < GetSize(); i++) {
+        // blue channel
+        n1 = p1.data[i].blue / 255.0f;
+        n2 = p2.data[i].blue / 255.0f;
+        data[i].blue = static_cast<unsigned char>(((n1 * n2) * 255) + 0.5f);
 
-        float r1 = top.data[i].red / 255.0f;
-        float r2 = bottom.data[i].red / 255.0f;
-        this->data[i].red = static_cast<unsigned char>(((r1 * r2) * 255) + 0.5f);
+        // green channel
+        n1 = p1.data[i].green / 255.0f;
+        n2 = p2.data[i].green / 255.0f;
+        data[i].green = static_cast<unsigned char>(((n1 * n2) * 255) + 0.5f);
+
+        // red channel
+        n1 = p1.data[i].red / 255.0f;
+        n2 = p2.data[i].red / 255.0f;
+        data[i].red = static_cast<unsigned char>(((n1 * n2) * 255) + 0.5f);
     }
 }
 
 void TGA::Overlay(const TGA& p1, const TGA& p2) {
-    this->CopyHeader(p1);
-    this->data = new Pixel[this->GetSize()];
+    CopyHeader(p1);
+    data = new Pixel[GetSize()];
 
     float n1, n2, blue, green, red;
-    for (int i = 0; i < this->GetSize(); i++) {
+    for (int i = 0; i < GetSize(); i++) {
         n1 = 0;
         n2 = 0;
 
         n1 = p1.data[i].blue / 255.0f;
         n2 = p2.data[i].blue / 255.0f;
 
-        //Logic for Blue Pixel
+        // blue channel
         if (n2 <= 0.5f) {
             blue = 2 * n1 * n2;
-            this->data[i].blue = (blue * 255) + 0.5f;
+            data[i].blue = (blue * 255) + 0.5f;
         }
-        
         else {
             blue = 1 - (2 * (1 - n1) * (1 - n2));
-            this->data[i].blue = (blue * 255) + 0.5f;
+            data[i].blue = (blue * 255) + 0.5f;
         }
         
-        //Logic for Green Pixel
+        // green channel
         n1 = p1.data[i].green / 255.0f;
         n2 = p2.data[i].green / 255.0f;
         if (n2 <= 0.5f) {
             green = 2 * n1 * n2;
-            this->data[i].green = (green * 255) + 0.5f;
+            data[i].green = (green * 255) + 0.5f;
         }
         else {
             green = 1 - (2 * (1 - n1) * (1 - n2));
-            this->data[i].green = (green * 255) + 0.5f;
+            data[i].green = (green * 255) + 0.5f;
         }
 
-        //Logic for Red
+        // red channel
         n1 = p1.data[i].red / 255.0f;
         n2 = p2.data[i].red / 255.0f;
         if (n2 <= 0.5f) {
             red = 2 * n1 * n2;
-            this->data[i].red = (red * 255) + 0.5f;
+            data[i].red = (red * 255) + 0.5f;
         }
         else {
             red = 1 - (2 * (1 - n1) * (1 - n2));
-            this->data[i].red = (red * 255) + 0.5f;
+            data[i].red = (red * 255) + 0.5f;
         }
     }
 }
 
 void TGA::Screen(const TGA& p1, const TGA& p2) {
-    this->CopyHeader(p1);
-    this->data = new Pixel[this->GetSize()];
+    CopyHeader(p1);
+    data = new Pixel[GetSize()];
 
     float n1, n2, blue, green, red;
-    for (int i = 0; i < this->GetSize(); i++) {
+    for (int i = 0; i < GetSize(); i++) {
         n1 = 0;
         n2 = 0;
 
+        // blue channel
         n1 = p1.data[i].blue / 255.0f;
         n2 = p2.data[i].blue / 255.0f;
         blue = 1 - ((1-n1) * (1-n2));
-        this->data[i].blue = blue * 255 + 0.5;
+        data[i].blue = blue * 255 + 0.5;
 
+        // green channel
         n1 = p1.data[i].green / 255.0f;
         n2 = p2.data[i].green / 255.0f;
         green = 1 - ((1-n1) * (1-n2));
-        this->data[i].green = green * 255 + 0.5;
+        data[i].green = green * 255 + 0.5;
 
+        // red channel
         n1 = p1.data[i].red / 255.0f;
         n2 = p2.data[i].red / 255.0f;
         red = 1 - ((1-n1) * (1-n2));
-        this->data[i].red = red * 255 + 0.5;
+        data[i].red = red * 255 + 0.5;
     }
 }
 
@@ -335,7 +342,7 @@ void TGA::AddRed(int amount) {
 
 void TGA::ScaleBlue(unsigned short amount) {
     int blue = 0;
-    for (int i = 0; i < this->GetSize(); i++) {
+    for (int i = 0; i < GetSize(); i++) {
         blue = data[i].blue * amount;
         if(blue > 255) {
             data[i].blue = 255;
@@ -348,7 +355,7 @@ void TGA::ScaleBlue(unsigned short amount) {
 
 void TGA::ScaleGreen(unsigned short amount) {
     int green = 0;
-    for (int i = 0; i < this->GetSize(); i++) {
+    for (int i = 0; i < GetSize(); i++) {
         green = data[i].green * amount;
         if(green > 255) {
             data[i].green = 255;
@@ -361,7 +368,7 @@ void TGA::ScaleGreen(unsigned short amount) {
 
 void TGA::ScaleRed(unsigned short amount) {
     int red;
-    for (int i = 0; i < this->GetSize(); i++) {
+    for (int i = 0; i < GetSize(); i++) {
         red = data[i].red * amount;
         if(red > 255) {
             data[i].red = 255;
